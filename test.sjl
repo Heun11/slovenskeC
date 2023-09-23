@@ -3,7 +3,8 @@
 
 #definuj PI 3.14
 
-cislo main()
+cislo zaciatok()
 {
+	vypis("Slovencina je super %.2f\n", PI);
 	vrat 0;
 }

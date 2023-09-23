@@ -2,13 +2,31 @@
 #include<stdlib.h>
 #include<string.h>
 
-char defines[] = "#define zaciatok main\n#define cislo int\n#define one void";
+void write_to_file(const char* filename, const char* code)
+{
+	FILE* fp;
+	fp = fopen(filename, "w");
+	if(NULL==fp){
+		printf("file can't be open\n");
+		return;
+	}
+
+	fprintf(fp,"%s",code);
+	fclose(fp);
+}
 
 char* translate(const char* filename)
 {
 	FILE* fp;
 	char c;
 	int sz;
+	char defines[] = "#define zaciatok main\n"
+			"#define vypis printf\n"
+			"#define vrat return\n"
+			"#define cislo int\n"
+			"#define pismeno char\n"
+			"#define one void\n\n";
+	int defines_len = sizeof(defines)/sizeof(char);
 
 	fp = fopen(filename, "r");
 	if(NULL==fp){
@@ -20,8 +38,9 @@ char* translate(const char* filename)
 	sz = ftell(fp);
 	fseek(fp, 0L, SEEK_SET);
 
-	char* code = malloc((sz+1)*sizeof(char));
-	char* codeNew = malloc((sz+1)*sizeof(char));
+	char* code = (char*)malloc((sz+1)*sizeof(char));
+	int maxSize = (sz+defines_len+1)*sizeof(char);
+	char* codeNew = (char*)malloc(maxSize+1);
 	int codeI = 0;
 	int codeINew = 0;
 
@@ -32,8 +51,13 @@ char* translate(const char* filename)
 	}
 	code[codeI] = '\0';
 	codeI++;
+	fclose(fp);
 
-	// code je cely kod, teraz potrebujem dostat list tokenov
+	for(int i=0;i<defines_len-1;i++){
+		codeNew[codeINew] = defines[i];
+		codeINew++;
+	}
+	codeNew[codeINew] = '\0';
 	
 	char* buff = malloc(32*sizeof(char));
 	int buffI = 0;
@@ -61,19 +85,32 @@ char* translate(const char* filename)
 			buffI++;
 			konecI = i;
 
+			if(maxSize-codeINew<=startI-lastI){
+				maxSize+=startI-lastI+1;
+				codeNew = realloc(codeNew, maxSize);
+			}
 			for(int j=lastI;j<startI;j++){
 				codeNew[codeINew] = code[j];
 				codeINew++;
 			}
 			if(strcmp(buff, "#zahrn")==0){
 				char def[] = "#include";
-				for(int j=0;j<sizeof(def)-1;j++){
+				if(maxSize-codeINew<=sizeof(def)/sizeof(char)){
+					maxSize+=sizeof(def)/sizeof(char)+1;
+					codeNew = realloc(codeNew, maxSize);
+				}
+				for(int j=0;j<(sizeof(def)/sizeof(char))-1;j++){
 					codeNew[codeINew] = def[j];
 					codeINew++;
 				}
 			}
 			if(strcmp(buff, "#definuj")==0){
 				char def[] = "#define";
+				if(maxSize-codeINew<=sizeof(def)/sizeof(char)){
+					maxSize+=sizeof(def)/sizeof(char)+1;
+					codeNew = realloc(codeNew, maxSize);
+				}
+
 				for(int j=0;j<sizeof(def)-1;j++){
 					codeNew[codeINew] = def[j];
 					codeINew++;
@@ -85,6 +122,11 @@ char* translate(const char* filename)
 		}
 
 		i++;
+	}
+
+	if(maxSize-codeINew<=codeI-lastI){
+		maxSize+=(codeI-lastI)*sizeof(char);
+		codeNew = realloc(codeNew, maxSize);
 	}
 
 	for(int i=lastI;i<codeI-2;i++){
@@ -100,7 +142,9 @@ int main(int argc, char** argv)
 {
 	if(argc>1 && argc<3){
 		char* c = translate(argv[1]);
-		printf("%s", c);
+		//printf("%s\n", c);
+		write_to_file("slovenskyPreklad.c", c);
+		system("gcc slovenskyPreklad.c -o main");
 	}
 	else{
 		printf("nedal si kod alebo si ich dal az moc\n");
