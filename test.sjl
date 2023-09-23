@@ -1,0 +1,9 @@
+#zahrn<stdio.h>
+#zahrn<stdlib.h>
+
+#definuj PI 3.14
+
+cislo main()
+{
+	vrat 0;
+}
