@@ -5,6 +5,19 @@
 
 cislo zaciatok()
 {
+	cislo a = 12;
+	cislo b = 1;
+
+	ak(a>b){
+		vypis("a je vacsie ako b\n");
+	}
+	alebo(b<a){
+		vypis("b je vacsie ako b\n");
+	}
+	inak{
+		vypis("b je rovne a\n");
+	}
+
 	vypis("Slovencina je super %.2f\n", PI);
 	vrat 0;
 }

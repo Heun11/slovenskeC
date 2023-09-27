@@ -25,7 +25,23 @@ char* translate(const char* filename)
 			"#define vrat return\n"
 			"#define cislo int\n"
 			"#define pismeno char\n"
-			"#define one void\n\n";
+			"#define one void\n"
+			"#define konstanta const\n"
+			"#define desatinne_cislo float\n"
+			"#define velke_desatinne_cislo double\n"
+			"#define velke long\n"
+			"#define kratke short\n"
+			"#define struktura struct\n"
+			"#define typova_definicia typedef\n"
+			"#define ser_na_to break\n"
+			"#define pokracuj continue\n"
+			"#define ak if\n"
+			"#define alebo else if\n"
+			"#define inak else\n"
+			"#define pismeno char\n"
+			"#define pre for\n"
+			"#define pokial while\n"
+			"\n";
 	int defines_len = sizeof(defines)/sizeof(char);
 
 	fp = fopen(filename, "r");
@@ -140,14 +156,17 @@ char* translate(const char* filename)
 
 int main(int argc, char** argv)
 {
-	if(argc>1 && argc<3){
+	if(argc>1 && argc<4){
 		char* c = translate(argv[1]);
-		//printf("%s\n", c);
+		char* com = malloc(sizeof(char)*(sizeof(argv[2])/sizeof(char)+48));
 		write_to_file("slovenskyPreklad.c", c);
-		system("gcc slovenskyPreklad.c -o main");
+		sprintf(com, "gcc slovenskyPreklad.c -o %s", argv[2]);
+		system(com);
+		free(com);
+		free(c);
 	}
 	else{
-		printf("nedal si kod alebo si ich dal az moc\n");
+		printf("nedal si parametre alebo si ich dal az moc\nTreba dat \"./slovencina nazov.sjl nazov\"\n");
 	}
 
 	return 0;
