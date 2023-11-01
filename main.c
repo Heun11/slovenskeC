@@ -30,7 +30,7 @@ char* translate(const char* filename)
 			"#define desatinne_cislo float\n"
 			"#define velke_desatinne_cislo double\n"
 			"#define velke long\n"
-			"#define kratke short\n"
+			"#define male short\n"
 			"#define struktura struct\n"
 			"#define typova_definicia typedef\n"
 			"#define ser_na_to break\n"
@@ -41,6 +41,22 @@ char* translate(const char* filename)
 			"#define pismeno char\n"
 			"#define pre for\n"
 			"#define pokial while\n"
+			"#define prepinac switch\n"
+			"#define pripad case\n"
+			"#define klasicky default\n"
+			"#define vycet enum\n"
+			"#define extrahuj extern\n"
+			"#define chod_na goto\n"
+			"#define riadkova inline\n"
+			"#define chod_na goto\n"
+			"#define registruj register\n"
+			"#define obmedz restrict\n"
+			"#define znamienkove signed\n"
+			"#define bezznamienkove unsigned\n"
+			"#define velkost_tohto sizeof\n"
+			"#define staticke static\n"
+			"#define zvaz union\n"
+			"#define nestala volatile\n"
 			"\n";
 	int defines_len = sizeof(defines)/sizeof(char);
 
@@ -122,6 +138,18 @@ char* translate(const char* filename)
 			}
 			if(strcmp(buff, "#definuj")==0){
 				char def[] = "#define";
+				if(maxSize-codeINew<=sizeof(def)/sizeof(char)){
+					maxSize+=sizeof(def)/sizeof(char)+1;
+					codeNew = realloc(codeNew, maxSize);
+				}
+
+				for(int j=0;j<sizeof(def)-1;j++){
+					codeNew[codeINew] = def[j];
+					codeINew++;
+				}
+			}
+      if(strcmp(buff, "#ak")==0){
+				char def[] = "#if";
 				if(maxSize-codeINew<=sizeof(def)/sizeof(char)){
 					maxSize+=sizeof(def)/sizeof(char)+1;
 					codeNew = realloc(codeNew, maxSize);
