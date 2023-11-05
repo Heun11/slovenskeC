@@ -148,6 +148,17 @@ char* translate(const char* filename)
 					codeINew++;
 				}
 			}
+      if(strcmp(buff, "#importuj")==0){
+				char def[] = "#import";
+				if(maxSize-codeINew<=sizeof(def)/sizeof(char)){
+					maxSize+=sizeof(def)/sizeof(char)+1;
+					codeNew = realloc(codeNew, maxSize);
+				}
+				for(int j=0;j<(sizeof(def)/sizeof(char))-1;j++){
+					codeNew[codeINew] = def[j];
+					codeINew++;
+				}
+			}
       if(strcmp(buff, "#ak")==0){
 				char def[] = "#if";
 				if(maxSize-codeINew<=sizeof(def)/sizeof(char)){
@@ -160,6 +171,115 @@ char* translate(const char* filename)
 					codeINew++;
 				}
 			}
+      if(strcmp(buff, "#alebo")==0){
+				char def[] = "#elif";
+				if(maxSize-codeINew<=sizeof(def)/sizeof(char)){
+					maxSize+=sizeof(def)/sizeof(char)+1;
+					codeNew = realloc(codeNew, maxSize);
+				}
+
+				for(int j=0;j<sizeof(def)-1;j++){
+					codeNew[codeINew] = def[j];
+					codeINew++;
+				}
+			}
+      if(strcmp(buff, "#inak")==0){
+				char def[] = "#else";
+				if(maxSize-codeINew<=sizeof(def)/sizeof(char)){
+					maxSize+=sizeof(def)/sizeof(char)+1;
+					codeNew = realloc(codeNew, maxSize);
+				}
+
+				for(int j=0;j<sizeof(def)-1;j++){
+					codeNew[codeINew] = def[j];
+					codeINew++;
+				}
+			}
+      if(strcmp(buff, "#ak_koniec")==0){
+				char def[] = "#endif";
+				if(maxSize-codeINew<=sizeof(def)/sizeof(char)){
+					maxSize+=sizeof(def)/sizeof(char)+1;
+					codeNew = realloc(codeNew, maxSize);
+				}
+
+				for(int j=0;j<sizeof(def)-1;j++){
+					codeNew[codeINew] = def[j];
+					codeINew++;
+				}
+			}
+      if(strcmp(buff, "#chyba")==0){
+				char def[] = "#error";
+				if(maxSize-codeINew<=sizeof(def)/sizeof(char)){
+					maxSize+=sizeof(def)/sizeof(char)+1;
+					codeNew = realloc(codeNew, maxSize);
+				}
+
+				for(int j=0;j<sizeof(def)-1;j++){
+					codeNew[codeINew] = def[j];
+					codeINew++;
+				}
+			}
+      if(strcmp(buff, "#ak_definovane")==0){
+				char def[] = "#ifdef";
+				if(maxSize-codeINew<=sizeof(def)/sizeof(char)){
+					maxSize+=sizeof(def)/sizeof(char)+1;
+					codeNew = realloc(codeNew, maxSize);
+				}
+
+				for(int j=0;j<sizeof(def)-1;j++){
+					codeNew[codeINew] = def[j];
+					codeINew++;
+				}
+			}
+      if(strcmp(buff, "#ak_nie_definovane")==0){
+				char def[] = "#ifndef";
+				if(maxSize-codeINew<=sizeof(def)/sizeof(char)){
+					maxSize+=sizeof(def)/sizeof(char)+1;
+					codeNew = realloc(codeNew, maxSize);
+				}
+
+				for(int j=0;j<sizeof(def)-1;j++){
+					codeNew[codeINew] = def[j];
+					codeINew++;
+				}
+			}
+      if(strcmp(buff, "#ciara")==0){
+				char def[] = "#line";
+				if(maxSize-codeINew<=sizeof(def)/sizeof(char)){
+					maxSize+=sizeof(def)/sizeof(char)+1;
+					codeNew = realloc(codeNew, maxSize);
+				}
+
+				for(int j=0;j<sizeof(def)-1;j++){
+					codeNew[codeINew] = def[j];
+					codeINew++;
+				}
+			}
+      if(strcmp(buff, "#oddefinuj")==0){
+				char def[] = "#undef";
+				if(maxSize-codeINew<=sizeof(def)/sizeof(char)){
+					maxSize+=sizeof(def)/sizeof(char)+1;
+					codeNew = realloc(codeNew, maxSize);
+				}
+
+				for(int j=0;j<sizeof(def)-1;j++){
+					codeNew[codeINew] = def[j];
+					codeINew++;
+				}
+			}
+      if(strcmp(buff, "#pouzivam")==0){
+				char def[] = "#using";
+				if(maxSize-codeINew<=sizeof(def)/sizeof(char)){
+					maxSize+=sizeof(def)/sizeof(char)+1;
+					codeNew = realloc(codeNew, maxSize);
+				}
+
+				for(int j=0;j<sizeof(def)-1;j++){
+					codeNew[codeINew] = def[j];
+					codeINew++;
+				}
+			}
+
 
 
 			lastI = konecI;

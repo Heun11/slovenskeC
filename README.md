@@ -105,6 +105,16 @@ Projekt Translatora z našej (Slovenskej) verzie C do pôvodnej C formy a násle
     nestala               volatile  nestála
 
 ### Predprocesorové direktíva Slovenského C (zatiaľ)
-    #zahrn   #include zahrň
-    #definuj #define  definuj
-    #ak      #if      ak
+    #zahrn             #include zahrň
+    #definuj           #define  definuj
+    #ak                #if      ak
+    #importuj          #import  importuj
+    #alebo             #elif    alebo
+    #inak              #else    inak
+    #ak_koniec         #endif   ak koniec
+    #chyba             #error   chyba
+    #ak_definovane     #ifdef   ak definované
+    #ak_nie_definovane #ifndef  ak nie definované
+    #ciara             #line    čiara
+    #oddefinuj         #undef   oddefinuj
+    #pouzivam          #using   používam
